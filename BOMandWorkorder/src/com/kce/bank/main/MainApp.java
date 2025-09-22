@@ -1,28 +1,17 @@
 package com.kce.bank.main;
-
 import com.kce.bank.exception.InsufficientStockException;
 import com.kce.bank.exception.InvalidOperationException;
 import com.kce.bank.model.*;
 import com.kce.bank.service.MRPService;
-
 import java.util.*;
-
-/**
- * Console menu driving the MRP system.
- * Run this class (Main method) in Eclipse.
- */
 public class MainApp {
     private static final Scanner SC = new Scanner(System.in);
     private static MRPService service;
-
     public static void main(String[] args) {
         System.out.println("=== Simple MRP Console App ===");
         Warehouse wh = new Warehouse("MainWarehouse");
         service = new MRPService(wh);
-
-        // seed sample data
         seedSampleData();
-
         boolean running = true;
         while (running) {
             printMenu();
@@ -174,14 +163,10 @@ public class MainApp {
         System.out.print(prompt);
         return SC.nextLine().trim();
     }
-
     private static void seedSampleData() {
-        // Add components and finished product
         service.addProduct("C001", "Component-1", 500);
         service.addProduct("C002", "Component-2", 300);
         service.addProduct("FG01", "Finished-Good-1", 10);
-
-        // Define BOM for FG01: needs C001 x2, C002 x1
         List<BOMItem> items = new ArrayList<>();
         items.add(new BOMItem(service.getProduct("C001"), 2));
         items.add(new BOMItem(service.getProduct("C002"), 1));
